@@ -30,11 +30,11 @@ class KhsController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        // Get all semesters where student has KRS
+        // Get all semesters where student has KRS (oldest first for historical view)
         $semesterList = Krs::where('mahasiswa_id', $mahasiswa->id)
             ->where('status', 'approved')
             ->with('tahunAkademik')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('tahun_akademik_id', 'asc')
             ->get()
             ->map(function ($krs) use ($mahasiswa) {
                 $ipsData = $this->calculationService->calculateIPS($mahasiswa, $krs->tahun_akademik_id);

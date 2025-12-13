@@ -84,9 +84,6 @@
                 <div class="divide-y divide-siakad-light/50">
                     @forelse($krs->krsDetail as $detail)
                     <div class="p-4 flex items-center gap-4 hover:bg-siakad-light/20 transition">
-                        <div class="w-11 h-11 rounded-lg bg-siakad-primary flex items-center justify-center text-white font-semibold">
-                            {{ $detail->kelas->nama_kelas }}
-                        </div>
                         <div class="flex-1 min-w-0">
                             <p class="font-medium text-siakad-dark truncate">{{ $detail->kelas->mataKuliah->nama_mk }}</p>
                             <p class="text-xs text-siakad-secondary">{{ $detail->kelas->mataKuliah->kode_mk }} • {{ $detail->kelas->dosen->user->name }}</p>
@@ -134,31 +131,43 @@
                     <p class="text-xs text-siakad-secondary mt-1">Pilih kelas untuk diambil</p>
                 </div>
                 
-                <div class="max-h-[60vh] overflow-y-auto divide-y divide-siakad-light/50">
-                    @forelse($availableKelas as $k)
-                    <div class="p-4">
-                        <div class="flex items-start gap-3">
-                            <div class="w-9 h-9 rounded-lg bg-siakad-light flex items-center justify-center text-siakad-secondary font-semibold text-sm flex-shrink-0">
-                                {{ $k->nama_kelas }}
+                <div class="max-h-[60vh] overflow-y-auto">
+                    @forelse($availableKelas as $semester => $kelasList)
+                    <div x-data="{ open: false }" class="border-b border-siakad-light/50 last:border-b-0">
+                        <button @click="open = !open" class="w-full px-4 py-3 bg-siakad-light/30 dark:bg-slate-700/30 flex items-center justify-between hover:bg-siakad-light/50 dark:hover:bg-slate-700/50 transition cursor-pointer">
+                            <div class="text-left">
+                                <h4 class="font-semibold text-siakad-primary text-sm">{{ $semester }}</h4>
+                                <p class="text-[10px] text-siakad-secondary">{{ $kelasList->count() }} kelas tersedia</p>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium text-siakad-dark text-sm truncate">{{ $k->mataKuliah->nama_mk }}</p>
-                                <p class="text-[11px] text-siakad-secondary mt-0.5">{{ $k->mataKuliah->sks }} SKS • {{ $k->dosen->user->name }}</p>
-                                <div class="flex items-center gap-2 mt-2">
-                                    <div class="flex-1 h-1 bg-siakad-light rounded-full overflow-hidden">
-                                        <div class="h-full bg-siakad-primary rounded-full" style="width: {{ min(100, ($k->krsDetail->count() / $k->kapasitas) * 100) }}%"></div>
+                            <svg class="w-4 h-4 text-siakad-secondary transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" x-collapse class="divide-y divide-siakad-light/30">
+                            @foreach($kelasList as $k)
+                            <div class="p-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-medium text-siakad-dark text-sm truncate">{{ $k->mataKuliah->nama_mk }}</p>
+                                        <p class="text-[11px] text-siakad-secondary mt-0.5">{{ $k->mataKuliah->sks }} SKS • {{ $k->dosen->user->name ?? '-' }}</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <div class="flex-1 h-1 bg-siakad-light rounded-full overflow-hidden">
+                                                <div class="h-full bg-siakad-primary rounded-full" style="width: {{ min(100, ($k->krsDetail->count() / $k->kapasitas) * 100) }}%"></div>
+                                            </div>
+                                            <span class="text-[10px] text-siakad-secondary">{{ $k->krsDetail->count() }}/{{ $k->kapasitas }}</span>
+                                        </div>
                                     </div>
-                                    <span class="text-[10px] text-siakad-secondary">{{ $k->krsDetail->count() }}/{{ $k->kapasitas }}</span>
                                 </div>
+                                <form action="{{ url('mahasiswa/krs') }}" method="POST" class="mt-3">
+                                    @csrf
+                                    <input type="hidden" name="kelas_id" value="{{ $k->id }}">
+                                    <button type="submit" class="w-full py-2 px-3 bg-siakad-primary/10 text-siakad-primary rounded-lg font-medium text-sm hover:bg-siakad-primary/20 transition">
+                                        + Ambil Kelas
+                                    </button>
+                                </form>
                             </div>
+                            @endforeach
                         </div>
-                        <form action="{{ url('mahasiswa/krs') }}" method="POST" class="mt-3">
-                            @csrf
-                            <input type="hidden" name="kelas_id" value="{{ $k->id }}">
-                            <button type="submit" class="w-full py-2 px-3 bg-siakad-primary/10 text-siakad-primary rounded-lg font-medium text-sm hover:bg-siakad-primary/20 transition">
-                                + Ambil Kelas
-                            </button>
-                        </form>
                     </div>
                     @empty
                     <div class="p-6 text-center text-siakad-secondary text-sm">

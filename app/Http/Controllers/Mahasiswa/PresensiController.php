@@ -29,23 +29,30 @@ class PresensiController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        // Get all kelas from approved KRS
+        // Get all kelas from approved KRS with tahun akademik info
         $kelasList = Kelas::whereHas('krsDetail', function ($q) use ($mahasiswa) {
             $q->whereHas('krs', fn($q2) => $q2
                 ->where('mahasiswa_id', $mahasiswa->id)
                 ->where('status', 'approved')
             );
-        })->with(['mataKuliah', 'dosen.user', 'jadwal'])->get();
+        })->with(['mataKuliah', 'dosen.user', 'jadwal', 'krsDetail.krs.tahunAkademik'])->get();
 
-        // Get rekap for each kelas
+        // Get rekap for each kelas and group by semester
         $rekapList = $kelasList->map(function ($kelas) use ($mahasiswa) {
+            $krs = $kelas->krsDetail->first()?->krs;
+            $ta = $krs?->tahunAkademik;
             return [
                 'kelas' => $kelas,
                 'rekap' => $this->presensiService->getRekapPresensi($mahasiswa->id, $kelas->id),
+                'semester' => $ta ? $ta->tahun . ' ' . ucfirst($ta->semester) : 'Unknown',
+                'semester_order' => $ta ? $ta->id : 0,
             ];
         });
 
-        return view('mahasiswa.presensi.index', compact('mahasiswa', 'rekapList'));
+        // Group by semester - sort by semester_order desc first so latest semester is first
+        $rekapBySemester = $rekapList->sortByDesc('semester_order')->groupBy('semester');
+
+        return view('mahasiswa.presensi.index', compact('mahasiswa', 'rekapList', 'rekapBySemester'));
     }
 
     /**

@@ -34,12 +34,14 @@ class DashboardController extends Controller
         // Get IPS History for chart
         $ipsHistory = $this->calculationService->getIPSHistory($mahasiswa);
         
-        // Calculate current semester IPS
+        // Current semester IPS = last semester with actual grades (IPS > 0)
         $activeTA = TahunAkademik::where('is_active', true)->first();
-        $currentIps = $activeTA ? $this->calculationService->calculateIPS($mahasiswa, $activeTA->id) : null;
+        $semestersWithGrades = $ipsHistory->filter(fn($s) => $s['ips'] > 0);
+        $lastSemesterWithGrades = $semestersWithGrades->last();
+        $currentIps = $lastSemesterWithGrades ? ['ips' => $lastSemesterWithGrades['ips'], 'total_sks' => $lastSemesterWithGrades['total_sks']] : null;
         
-        // Max SKS for next semester
-        $lastIps = $ipsHistory->last()['ips'] ?? 0;
+        // Max SKS for next semester based on last IPS
+        $lastIps = $lastSemesterWithGrades['ips'] ?? 0;
         $maxSks = $this->calculationService->getMaxSKS($lastIps);
 
         // SKS per semester for chart

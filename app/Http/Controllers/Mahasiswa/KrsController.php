@@ -23,13 +23,16 @@ class KrsController extends Controller
 
         $krs = $this->krsService->getActiveKrsOrNew($mahasiswa);
         
-        // Load available classes (that are not yet taken)
-        // This logic is simple; for production need better filter
-        $availableKelas = \App\Models\Kelas::with(['mataKuliah', 'dosen'])
+        // Load available classes (that are not yet taken), grouped by semester
+        $availableKelas = \App\Models\Kelas::with(['mataKuliah', 'dosen.user', 'krsDetail'])
             ->whereDoesntHave('krsDetail', function($q) use ($krs) {
                 $q->where('krs_id', $krs->id);
             })
-            ->get();
+            ->get()
+            ->groupBy(fn($k) => 'Semester ' . $k->mataKuliah->semester);
+        
+        // Sort by semester number
+        $availableKelas = $availableKelas->sortKeys();
 
         return view('mahasiswa.krs.index', compact('krs', 'availableKelas'));
     }

@@ -161,6 +161,10 @@ Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasi
     Route::get('/export/transkrip', [\App\Http\Controllers\Mahasiswa\ExportController::class, 'transkrip'])->name('export.transkrip');
     Route::get('/export/khs/{tahunAkademik}', [\App\Http\Controllers\Mahasiswa\ExportController::class, 'khs'])->name('export.khs');
 
+    // AI Academic Advisor
+    Route::get('/ai-advisor', [\App\Http\Controllers\Mahasiswa\AiAdvisorController::class, 'index'])->name('ai-advisor.index');
+    Route::post('/ai-advisor/chat', [\App\Http\Controllers\Mahasiswa\AiAdvisorController::class, 'chat'])->name('ai-advisor.chat');
+
     // Skripsi
     Route::get('/skripsi', [\App\Http\Controllers\Mahasiswa\SkripsiController::class, 'index'])->name('skripsi.index');
     Route::get('/skripsi/create', [\App\Http\Controllers\Mahasiswa\SkripsiController::class, 'create'])->name('skripsi.create');

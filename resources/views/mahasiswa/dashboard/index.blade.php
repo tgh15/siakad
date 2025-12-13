@@ -49,7 +49,7 @@
                         <span class="text-[11px] font-medium opacity-80 uppercase tracking-wide">IP Semester</span>
                     </div>
                     <p class="text-2xl font-bold">{{ $currentIps ? number_format($currentIps['ips'], 2) : '-' }}</p>
-                    <p class="text-[10px] opacity-70 mt-1">Semester Ini</p>
+                    <p class="text-[10px] opacity-70 mt-1">Semester Lalu</p>
                 </div>
             </div>
 
@@ -158,7 +158,7 @@
         const textColor = isDark ? '#94A3B8' : '#456882';
 
         // SKS Chart
-        const sksData = @json($sksHistory).reverse();
+        const sksData = @json($sksHistory);
         const sksCtx = document.getElementById('sksChart').getContext('2d');
         new Chart(sksCtx, {
             type: 'bar',
@@ -183,7 +183,7 @@
         });
 
         // IPS Chart
-        const ipsData = @json($ipsHistory).reverse();
+        const ipsData = @json($ipsHistory);
         const ipsCtx = document.getElementById('ipsChart').getContext('2d');
         new Chart(ipsCtx, {
             type: 'line',

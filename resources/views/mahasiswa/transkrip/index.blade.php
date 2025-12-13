@@ -11,8 +11,8 @@
 
     <!-- Summary Cards -->
     @php
-        $totalSks = collect($transcript['semesters'] ?? [])->sum('total_sks');
-        $ipk = $ipsHistory->last()['ips'] ?? 0;
+        $totalSks = $transcript['total_sks_lulus'] ?? 0;
+        $ipk = $transcript['ipk'] ?? 0;
     @endphp
 
     <!-- Mobile Download Button -->
@@ -153,7 +153,7 @@
         const siakadLight = '#E3E3E3';
 
         // IPS Chart
-        const ipsData = @json($ipsHistory).reverse();
+        const ipsData = @json($ipsHistory->filter(fn($s) => $s['ips'] > 0)->values());
         const ipsCtx = document.getElementById('ipsChart').getContext('2d');
         new Chart(ipsCtx, {
             type: 'line',
