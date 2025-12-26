@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
-</p>
-
-<h1 align="center">🎓 SIAKAD - Sistem Informasi Akademik</h1>
+<h1 align="center"> SIAKAD AI - Sistem Informasi Akademik</h1>
 
 <p align="center">
   <strong>Modern Academic Information System built with Laravel 12</strong>
@@ -28,24 +24,24 @@
 
 ---
 
-## 📋 Overview
+## Overview
 
 **SIAKAD** (Sistem Informasi Akademik) adalah aplikasi manajemen akademik modern yang dirancang untuk universitas dan perguruan tinggi. Dibangun dengan Laravel 12 dan menggunakan arsitektur yang clean, scalable, dan production-ready.
 
-### ✨ Highlights
+### Highlights
 
-- 🎨 **Modern UI** - Responsive design dengan TailwindCSS dan Alpine.js
-- 🤖 **AI-Powered** - Academic Advisor berbasis Gemini AI
-- 🔐 **Secure** - Role-based access control, rate limiting, dan security headers
-- ⚡ **Fast** - Optimized queries, caching strategy, dan database indexes
-- 📱 **Responsive** - Mobile-friendly interface
-- 🌐 **Indonesian Locale** - Fully localized untuk bahasa Indonesia
+- **Modern UI** - Responsive design dengan TailwindCSS dan Alpine.js
+- **AI-Powered** - Academic Advisor berbasis Gemini AI
+- **Secure** - Role-based access control, rate limiting, dan security headers
+- **Fast** - Optimized queries, caching strategy, dan database indexes
+- **Responsive** - Mobile-friendly interface
+- **Indonesian Locale** - Fully localized untuk bahasa Indonesia
 
 ---
 
-## 🚀 Features
+## Features
 
-### 👨‍🎓 Mahasiswa
+### Mahasiswa
 | Feature | Description |
 |---------|-------------|
 | **KRS Online** | Pengisian Kartu Rencana Studi dengan validasi SKS otomatis |
@@ -59,7 +55,7 @@
 | **Kerja Praktek** | Manajemen KP dan logbook |
 | **Export PDF** | Download transkrip dan KHS dalam format PDF |
 
-### 👨‍🏫 Dosen
+### Dosen
 | Feature | Description |
 |---------|-------------|
 | **Input Nilai** | Input nilai mahasiswa per kelas |
@@ -70,7 +66,7 @@
 | **LMS Management** | Upload materi dan kelola tugas |
 | **Kehadiran** | Absensi kehadiran dosen |
 
-### 👨‍💼 Admin
+### Admin
 | Feature | Description |
 |---------|-------------|
 | **Dashboard** | Statistik dan overview akademik |
@@ -81,7 +77,7 @@
 | **Ruangan** | Manajemen ruang kuliah |
 | **Kehadiran Dosen** | Monitoring kehadiran dosen |
 
-### 🔒 Security Features
+### Security Features
 - ✅ Role-based access control (RBAC)
 - ✅ Faculty-scoped admin access
 - ✅ Rate limiting pada endpoint sensitif
@@ -91,7 +87,7 @@
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Backend
 | Technology | Version | Description |
@@ -122,7 +118,7 @@
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -261,7 +257,7 @@ return [
 
 ---
 
-## 👥 Default Users
+## Default Users
 
 After running seeders, you can login with:
 
@@ -272,11 +268,11 @@ After running seeders, you can login with:
 | **Dosen** | `dosen@siakad.test` | `password` | Dr. Ahmad Fauzi, M.Kom. |
 | **Mahasiswa** | `mahasiswa@siakad.test` | `password` | Budi Santoso (Semester 5, NIM: 2022101001) |
 
-> ⚠️ **Important**: Change these passwords immediately in production!
+> **Important**: Change these passwords immediately in production!
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 siakad/
@@ -312,7 +308,7 @@ siakad/
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
 ### Core Tables
 
@@ -377,7 +373,7 @@ siakad/
 
 ---
 
-## 🔧 Artisan Commands
+## Artisan Commands
 
 ```bash
 # Cache warming (after deployment)
@@ -398,7 +394,7 @@ php artisan migrate:fresh --seed
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run all tests
@@ -413,7 +409,7 @@ php artisan test --coverage
 
 ---
 
-## 🔐 Security
+## Security
 
 ### Rate Limiting
 - AI Chat: 10 requests/minute per user
@@ -432,7 +428,7 @@ php artisan test --coverage
 
 ---
 
-## 📈 Performance
+## Performance
 
 ### Optimizations
 - Database indexes on frequently queried columns
@@ -452,7 +448,7 @@ php artisan test --coverage
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -470,15 +466,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-## 📝 License
+## License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ---
 
-## 👨‍💻 Author
+## Author
 
-Developed with ❤️ for academic purposes.
+Developed with ❤️ by Ryanda
 
 ---
 
